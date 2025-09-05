@@ -1,0 +1,80 @@
+(function () {
+    function ctx() { try { return AJS.contextPath(); } catch(e) { return ""; } }
+    function esc(s){ return (s==null?"":String(s)) }
+
+    var prefs = new gadgets.Prefs();
+    var group = prefs.getString("group") || "";
+
+    var url = ctx() + "/rest/jira-cloud-gadget/1.0/issues";
+    var qs  = "?limit=100" + (group ? "&group="+encodeURIComponent(group) : "");
+
+    var groupLabel = document.getElementById("group-label");
+    if (groupLabel) groupLabel.textContent = group || "(All)";
+
+    function render(items) {
+        var html = '';
+        html += '<table class="aui aui-table-sortable">';
+        html += '<thead><tr>' +
+            '<th>KEY</th><th>SUMMARY</th><th>URD</th><th>EPIC_LINK</th>' +
+            '<th>IT_MAIN_DEPT</th><th>IT_RELATION_DEPT</th><th>ASSIGNEE</th>' +
+            '<th>DEV_LEADER</th><th>STATUS</th><th>DEV_START_DATE</th>' +
+            '<th>DEV_MEMBER</th><th>DUEDATE</th><th>PENDING_DATE</th>' +
+            '<th>MANHOURS_ACTUAL</th><th>MANHOURS_ESTIMATE</th>' +
+            '</tr></thead><tbody>';
+
+        for (var i=0;i<items.length;i++){
+            var r = items[i];
+            html += '<tr>' +
+                '<td>'+esc(r.KEY)+'</td>' +
+                '<td title="'+esc(r.SUMMARY)+'">'+esc(r.SUMMARY)+'</td>' +
+                '<td>'+esc(r.URD)+'</td>' +
+                '<td>'+esc(r.EPIC_LINK)+'</td>' +
+                '<td>'+esc(r.IT_MAIN_DEPT)+'</td>' +
+                '<td>'+esc(r.IT_RELATION_DEPT)+'</td>' +
+                '<td>'+esc(r.ASSIGNEE)+'</td>' +
+                '<td>'+esc(r.DEV_LEADER)+'</td>' +
+                '<td>'+esc(r.STATUS)+'</td>' +
+                '<td>'+esc(r.DEV_START_DATE)+'</td>' +
+                '<td>'+esc(r.DEV_MEMBER)+'</td>' +
+                '<td>'+esc(r.DUEDATE)+'</td>' +
+                '<td>'+esc(r.PENDING_DATE)+'</td>' +
+                '<td>'+esc(r.MANHOURS_ACTUAL)+'</td>' +
+                '<td>'+esc(r.MANHOURS_ESTIMATE)+'</td>' +
+                '</tr>';
+        }
+        html += '</tbody></table>';
+        document.getElementById('table-wrap').innerHTML = html;
+        if (gadgets && gadgets.window && gadgets.window.adjustHeight) {
+            gadgets.window.adjustHeight();
+        }
+    }
+
+    function fetchData() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url + qs, true);
+        xhr.setRequestHeader('Accept', 'application/json');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    try {
+                        var json = JSON.parse(xhr.responseText);
+                        render(json.items || []);
+                    } catch (e) {
+                        document.getElementById('table-wrap').innerHTML =
+                            '<div class="aui-message aui-message-error">Parse error</div>';
+                    }
+                } else {
+                    document.getElementById('table-wrap').innerHTML =
+                        '<div class="aui-message aui-message-error">HTTP '+xhr.status+'</div>';
+                }
+                if (gadgets && gadgets.window && gadgets.window.adjustHeight) {
+                    gadgets.window.adjustHeight();
+                }
+            }
+        };
+        xhr.send();
+    }
+
+    try { gadgets.window.setTitle("JIRA Issue Cloud (DB)"); } catch(e){}
+    fetchData();
+})();
