@@ -24,7 +24,10 @@
     <script type="text/javascript">
       (function () {
         function ctx() {
-          try { return AJS.contextPath(); } catch(e) { return ""; }
+          // pathname dạng: /jira/plugins/servlet/gadgets/ifr?...
+          var p = window.location.pathname || "";
+          var i = p.indexOf("/plugins/servlet/");
+          return i > 0 ? p.substring(0, i) : "";
         }
         function esc(s){ return (s==null?"":String(s)) }
 
@@ -39,31 +42,31 @@
           var html = '';
           html += '<table class="aui aui-table-sortable">';
           html += '<thead><tr>' +
-                  '<th>KEY</th><th>SUMMARY</th><th>URD</th><th>EPIC_LINK</th>' +
-                  '<th>IT_MAIN_DEPT</th><th>IT_RELATION_DEPT</th><th>ASSIGNEE</th>' +
-                  '<th>DEV_LEADER</th><th>STATUS</th><th>DEV_START_DATE</th>' +
-                  '<th>DEV_MEMBER</th><th>DUEDATE</th><th>PENDING_DATE</th>' +
-                  '<th>MANHOURS_ACTUAL</th><th>MANHOURS_ESTIMATE</th>' +
+                  '<th>Key</th><th>Summary</th><th>urd</th><th>Epic link</th>' +
+                  '<th>IT main dept</th><th>IT relation dept</th><th>Assignee</th>' +
+                  '<th>Dev leader</th><th>Status</th><th>Dev start date</th>' +
+                  '<th>Dev member</th><th>Duedate</th><th>Pending Date</th>' +
+                  '<th>Manhours actual</th><th>Manhours estimate</th>' +
                   '</tr></thead><tbody>';
 
           for (var i=0;i<items.length;i++){
             var r = items[i];
             html += '<tr>' +
-              '<td>'+esc(r.KEY)+'</td>' +
-              '<td title="'+esc(r.SUMMARY)+'">'+esc(r.SUMMARY)+'</td>' +
-              '<td>'+esc(r.URD)+'</td>' +
-              '<td>'+esc(r.EPIC_LINK)+'</td>' +
-              '<td>'+esc(r.IT_MAIN_DEPT)+'</td>' +
-              '<td>'+esc(r.IT_RELATION_DEPT)+'</td>' +
-              '<td>'+esc(r.ASSIGNEE)+'</td>' +
-              '<td>'+esc(r.DEV_LEADER)+'</td>' +
-              '<td>'+esc(r.STATUS)+'</td>' +
-              '<td>'+esc(r.DEV_START_DATE)+'</td>' +
-              '<td>'+esc(r.DEV_MEMBER)+'</td>' +
-              '<td>'+esc(r.DUEDATE)+'</td>' +
-              '<td>'+esc(r.PENDING_DATE)+'</td>' +
-              '<td>'+esc(r.MANHOURS_ACTUAL)+'</td>' +
-              '<td>'+esc(r.MANHOURS_ESTIMATE)+'</td>' +
+              '<td>'+esc(r.key)+'</td>' +
+              '<td title="'+esc(r.summary)+'">'+esc(r.summary)+'</td>' +
+              '<td>'+esc(r.urd)+'</td>' +
+              '<td>'+esc(r.epicLink)+'</td>' +
+              '<td>'+esc(r.itMainDept)+'</td>' +
+              '<td>'+esc(r.itRelationDev)+'</td>' +
+              '<td>'+esc(r.assignee)+'</td>' +
+              '<td>'+esc(r.devLeader)+'</td>' +
+              '<td>'+esc(r.status)+'</td>' +
+              '<td>'+esc(r.devStartDate)+'</td>' +
+              '<td>'+esc(r.devMember)+'</td>' +
+              '<td>'+esc(r.dueDate)+'</td>' +
+              '<td>'+esc(r.pendingDate)+'</td>' +
+              '<td>'+esc(r.manHoursActual)+'</td>' +
+              '<td>'+esc(r.manHoursEstimate)+'</td>' +
               '</tr>';
           }
           html += '</tbody></table>';

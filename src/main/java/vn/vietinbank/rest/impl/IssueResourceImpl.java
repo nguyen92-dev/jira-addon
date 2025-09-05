@@ -6,12 +6,8 @@ import com.atlassian.jira.user.util.UserUtil;
 import vn.vietinbank.dao.IssueDAO;
 import vn.vietinbank.dao.impl.IssueDAOImpl;
 import vn.vietinbank.model.IssueInfo;
-import vn.vietinbank.rest.IssueResource;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
@@ -19,15 +15,16 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Path("/issues")
-@Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class IssueResourceImpl implements IssueResource {
+public class IssueResourceImpl {
 
     private final IssueDAO dao = new IssueDAOImpl();
-    @Override
+
     @GET
     @XsrfProtectionExcluded // GET không cần XSRF
-    public Response getIssues(List<String> groups, int limit, int offset) {
+    public Response getIssues(@QueryParam("groups") List<String> groups,
+                              @QueryParam("limit") int limit,
+                              @QueryParam("offset") int offset) {
         try {
             Optional<List<String>> assignees = Optional.empty();
             if (groups != null && !groups.isEmpty()) {
