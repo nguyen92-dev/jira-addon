@@ -13,7 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import com.atlassian.jira.component.pico.ComponentManager;
+
+import com.atlassian.jira.ComponentManager;
 import java.util.List;
 import java.util.Optional;
 
