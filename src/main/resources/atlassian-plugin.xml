@@ -37,9 +37,15 @@
     </web-resource>
 
     <web-resource key="issue-info-gadget-resources" name="Issue Info Gadget Resources">
-        <resource type="download" name="issue-info-gadget.html" location="/gadget/issue-info-gadget.html"/>
-        <resource type="download" name="issue-info-gadget.js" location="/gadget/issue-info-gadget.js"/>
-        <resource type="download" name="issue-info-gadget.css" location="/gadget/issue-info-gadget.css"/>
+        <resource type="download" name="issue-info-gadget.html" location="/gadget/issue-info-gadget.html">
+            <param name="authentication" value="none"/>
+        </resource>
+        <resource type="download" name="issue-info-gadget.js" location="/gadget/issue-info-gadget.js">
+            <param name="authentication" value="none"/>
+        </resource>
+        <resource type="download" name="issue-info-gadget.css" location="/gadget/issue-info-gadget.css">
+            <param name="authentication" value="none"/>
+        </resource>
     </web-resource>
 
 </atlassian-plugin>
