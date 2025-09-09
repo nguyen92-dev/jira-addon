@@ -8,5 +8,5 @@
 
     <UserPref name="group" display_name="Jira User Group (optional)" datatype="string" />
 
-    <Content type="html" href="issue-info-gadget.html"/>
+    <Content type="html" href="/download/resources/vn.vietinbank.vietinbank-gadgetttt:issue-info-gadget-resources/issue-info-gadget.html"/>
 </Module>
