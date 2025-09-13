@@ -28,12 +28,24 @@
     <!-- add our web resources -->
     <web-resource key="vietinbank-gadgetttt-resources" name="vietinbank-gadgetttt Web Resources">
         <dependency>com.atlassian.auiplugin:ajs</dependency>
-        
+
         <resource type="download" name="vietinbank-gadgetttt.css" location="/css/vietinbank-gadgetttt.css"/>
         <resource type="download" name="vietinbank-gadgetttt.js" location="/js/vietinbank-gadgetttt.js"/>
         <resource type="download" name="images/" location="/images"/>
 
         <context>vietinbank-gadgetttt</context>
     </web-resource>
-    
+
+    <web-resource key="issue-info-gadget-resources" name="Issue Info Gadget Resources">
+        <resource type="download" name="issue-info-gadget.html" location="/gadget/issue-info-gadget.html">
+            <param name="authentication" value="none"/>
+        </resource>
+        <resource type="download" name="issue-info-gadget.js" location="/gadget/issue-info-gadget.js">
+            <param name="authentication" value="none"/>
+        </resource>
+        <resource type="download" name="issue-info-gadget.css" location="/gadget/issue-info-gadget.css">
+            <param name="authentication" value="none"/>
+        </resource>
+    </web-resource>
+
 </atlassian-plugin>
